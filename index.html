@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Locator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:rgba(162,29,32,255);
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: whitesmoke;
+            font-family: ITC Serif Gothic;
+        }
+
+        #store-locator {
+            width: 95%;
+            margin: 20px auto;
+            background-color:black;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Store Locator</h1>
+    <span id="store-locator"></span>
+
+    <script>
+        (function() {
+            var iframe = document.createElement('iframe');
+            iframe.src = 'https://storelocatormaps.com/embed?settings=%7B%22apiKey%22%3A%22%22%2C%22googleMapsApiKey%22%3A%22AIzaSyC7iRi7Beh6AcbeEgcFVV7lFxk6d5ouMP8%22%2C%22layout%22%3A%22left%22%2C%22mapTheme%22%3A%22retro%22%2C%22mapboxMapTheme%22%3A%22outdoors%22%2C%22zoomLevel%22%3A5%2C%22mapBackground%22%3A%22%23FFFFFF%22%2C%22searchIconButton%22%3A%22%23FFFFFF%22%2C%22searchButtonBackground%22%3A%22%23752E3D%22%2C%22markersBehavior%22%3A%22group%22%2C%22markerType%22%3A%22icon%22%2C%22markerImage%22%3Anull%2C%22iconButtonColor%22%3A%22%23000%22%2C%22storeNameColor%22%3A%22%23000000%22%2C%22storeAddressColor%22%3A%22%23000000%22%2C%22directionsBtnColor%22%3A%22%230047AB%22%2C%22otherTextColor%22%3A%22%23454545%22%2C%22selectedMapType%22%3A%22google%22%2C%22email%22%3A%22aryanbansal182004%40gmail.com%22%7D';
+            iframe.style.border = '0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100vh';
+            iframe.allowFullscreen = true;
+            document.getElementById('store-locator').appendChild(iframe);
+        })();
+    </script>
+</body>
+</html>
