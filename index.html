@@ -1,47 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store Locator</title>
+    <title>Store Locations</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7iRi7Beh6AcbeEgcFVV7lFxk6d5ouMP8&callback=initMap" async defer></script>
+    <script>
+        var locations = [
+            { name: "UPES Bidholi", lat: 30.3934, lng: 77.9616, url: "https://www.google.com/maps/dir//UPES+Bidholi/" },
+            { name: "Goel Book Depot", lat: 30.5352, lng: 77.7274, url: "https://www.google.com/maps/dir//goel+book+depot+dakpathar/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x390f2e2cf9e5a9d7:0x22a4b2be70000000?sa=X&ved=1t:3061&ictx=111" },
+            { name: "UPES Kandoli", lat: 30.3428, lng: 77.9562, url: "https://www.google.com/maps/dir//UPES+Kandoli/" }
+        ];
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: { lat: 30.3934, lng: 77.9616 }
+            });
+
+            document.getElementById("store-list").innerHTML = ""; // Clear existing list
+
+            locations.forEach(function(store) {
+                var marker = new google.maps.Marker({
+                    position: { lat: store.lat, lng: store.lng },
+                    map: map,
+                    title: store.name
+                });
+
+                marker.addListener('click', function() {
+                    window.open(store.url, '_blank');
+                });
+
+                var listItem = document.createElement("div");
+                listItem.className = "store-item";
+                listItem.innerHTML = `<h3>${store.name}</h3>
+                                      <a href="${store.url}" target="_blank">Get Directions</a>`;
+                document.getElementById("store-list").appendChild(listItem);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var searchBar = document.querySelector(".search-bar");
+            searchBar.addEventListener("keyup", function() {
+                var filter = searchBar.value.toLowerCase();
+                var storeItems = document.querySelectorAll(".store-item");
+
+                storeItems.forEach(function(item) {
+                    var storeName = item.querySelector("h3").innerText.toLowerCase();
+                    item.style.display = storeName.includes(filter) ? "" : "none";
+                });
+            });
+        });
+    </script>
     <style>
         body {
+            background-color: rgba(162, 29, 32, 255);
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color:rgba(162,29,32,255);
-            color: #333;
         }
 
-        h1 {
-            text-align: center;
-            margin: 20px 0;
-            color: whitesmoke;
-            font-family: ITC Serif Gothic;
-        }
-
-        #store-locator {
-            width: 95%;
+        .container {
+            width: 80%;
             margin: 20px auto;
-            background-color:black;
+            background: white;
+            padding: 20px;
+            display: flex;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .store-section {
+            width: 30%;
+            padding: 20px;
+        }
+
+        .search-bar {
+            width: 92%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .store-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #map {
+            width: 70%;
+            height: 719px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Store Locator</h1>
-    <span id="store-locator"></span>
+    <div class="container">
+        <div class="store-section">
+            <input type="text" class="search-bar" placeholder="Search stores...">
+            <div id="store-list"></div>
+        </div>
+        <div id="map"></div>
+    </div>
 
-    <script>
-        (function() {
-            var iframe = document.createElement('iframe');
-            iframe.src = 'https://storelocatormaps.com/embed?settings=%7B%22apiKey%22%3A%22%22%2C%22googleMapsApiKey%22%3A%22AIzaSyC7iRi7Beh6AcbeEgcFVV7lFxk6d5ouMP8%22%2C%22layout%22%3A%22left%22%2C%22mapTheme%22%3A%22retro%22%2C%22mapboxMapTheme%22%3A%22outdoors%22%2C%22zoomLevel%22%3A5%2C%22mapBackground%22%3A%22%23FFFFFF%22%2C%22searchIconButton%22%3A%22%23FFFFFF%22%2C%22searchButtonBackground%22%3A%22%23752E3D%22%2C%22markersBehavior%22%3A%22group%22%2C%22markerType%22%3A%22icon%22%2C%22markerImage%22%3Anull%2C%22iconButtonColor%22%3A%22%23000%22%2C%22storeNameColor%22%3A%22%23000000%22%2C%22storeAddressColor%22%3A%22%23000000%22%2C%22directionsBtnColor%22%3A%22%230047AB%22%2C%22otherTextColor%22%3A%22%23454545%22%2C%22selectedMapType%22%3A%22google%22%2C%22email%22%3A%22aryanbansal182004%40gmail.com%22%7D';
-            iframe.style.border = '0';
-            iframe.style.width = '100%';
-            iframe.style.height = '100vh';
-            iframe.allowFullscreen = true;
-            document.getElementById('store-locator').appendChild(iframe);
-        })();
-    </script>
 </body>
 </html>
